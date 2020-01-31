@@ -1,0 +1,7 @@
+category: "distro"
+name: "funtoo"
+version: "1.4"
+conflicts:
+- category: "distro"
+  name: "raspbian"
+  version: ">=0.1"

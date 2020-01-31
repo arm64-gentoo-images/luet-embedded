@@ -1,0 +1,11 @@
+unpack: true
+requires:
+- category: "distro"
+  name: "seed"
+  version: ">=0.1"
+steps:
+- sh build.sh
+- rm -rf /boot/cmdline.txt
+- echo "/dev/mmcblk0p1  /boot  vfat  defaults  0 2" >> /etc/fstab
+includes:
+- /boot$|/boot/.*

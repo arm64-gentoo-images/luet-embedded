@@ -1,0 +1,12 @@
+general:
+  debug: true
+system:
+  rootfs: /
+  database_path: "/"
+  database_engine: "boltdb"
+repositories:
+   - name: "main"
+     type: "http"
+     enable: true
+     urls:
+       - "http://127.0.0.1:8000"
