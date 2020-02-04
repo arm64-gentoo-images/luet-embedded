@@ -1,0 +1,15 @@
+unpack: true
+requires:
+- category: "distro"
+  name: "seed"
+  version: ">=0.1"
+prelude:
+- apk --no-cache add ca-certificates tar gzip wget xz rsync
+- wget https://github.com/rancher/k3os/releases/download/v0.8.0/k3os-rootfs-amd64.tar.gz -O /rootfs.tar.gz
+steps:
+- mkdir /temp && cd /temp && tar -xvf /rootfs.tar.gz --xattrs --numeric-owner && rm /rootfs.tar.gz
+- cd /temp && rsync -A -a --delete --numeric-ids --recursive -d -H --one-file-system --xattrs v0.8.0/* /
+
+includes:
+- /sbin$|/sbin/.*
+- /k3os$|/k3os/.*

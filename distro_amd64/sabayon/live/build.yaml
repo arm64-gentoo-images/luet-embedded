@@ -1,0 +1,15 @@
+unpack: true
+includes:
+- /boot$|/boot/.*
+- /live_setup.sh
+requires:
+- category: "distro"
+  name: "sabayon-desktop"
+  version: ">=0.1"
+
+prelude:
+- equo up
+steps:
+- ACCEPT_LICENSE=* equo i sys-kernel/linux-sabayon-5.4.10 sabayon-dracut sys-boot/plymouth x11-themes/sabayon-artwork-plymouth-default
+- bash rebuild_dracut.sh
+- cp -rfv setup.sh /live_setup.sh

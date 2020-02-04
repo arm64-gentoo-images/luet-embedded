@@ -1,0 +1,14 @@
+unpack: true
+requires:
+- category: "distro"
+  name: "seed"
+  version: ">=0.1"
+prelude:
+- apk --no-cache add ca-certificates tar gzip wget xz rsync
+steps:
+- mkdir /boot
+# Not enough
+- wget https://github.com/rancher/k3os/releases/download/v0.8.0/k3os-vmlinuz-amd64 -O /boot/bzImage
+includes:
+- /boot$|/boot/.*
+
