@@ -13,7 +13,7 @@ TREE?=distro
 # For ARM image build script
 export LUET_CONFIG?=$(ROOT_DIR)/conf/luet.yaml
 export LUET_BIN?=$(LUET)
-export LUET_PACKAGES?=distro/raspbian-0.20191208 distro/raspbian-boot-0.20191208 system/luet-develop-0.5
+export LUET_PACKAGES?=distro/funtoo-rpi-meta-0.1
 export IMAGE_NAME?=luet_os.img
 
 .PHONY: all
