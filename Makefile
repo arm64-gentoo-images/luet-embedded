@@ -70,3 +70,11 @@ image:
 .PHONY: image-clean
 image-clean:
 	scripts/arm_clean.sh
+
+.PHONY: iso
+iso:
+	scripts/iso_build.sh
+
+.PHONY: iso-clean
+iso-clean:
+	scripts/iso_clean.sh
