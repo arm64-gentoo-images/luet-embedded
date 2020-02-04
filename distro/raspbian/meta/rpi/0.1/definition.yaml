@@ -1,0 +1,13 @@
+category: "distro"
+name: "raspbian-rpi-meta"
+version: "0.1"
+requires:
+- category: "distro"
+  name: "raspbian"
+  version: ">=0.1" 
+- category: "distro"
+  name: "raspbian-boot"
+  version: ">=0.1"
+- category: "system"
+  name: "luet-develop"
+  version: "0.5"
