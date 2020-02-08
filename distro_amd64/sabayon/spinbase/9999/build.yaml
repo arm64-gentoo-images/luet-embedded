@@ -1,5 +1,5 @@
 unpack: true
-image: "sabayon/spinbase-amd64"
+image: "sabayon/base-amd64"
 includes:
 - /bin$|/bin/.*
 - /dev$|/dev/.*
