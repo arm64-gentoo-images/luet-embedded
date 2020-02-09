@@ -1,0 +1,16 @@
+unpack: true
+requires:
+- category: "distro"
+  name: "seed"
+  version: ">=0.1"
+prelude:
+- apk --no-cache add ca-certificates tar gzip wget xz rsync git
+- git clone https://github.com/rancher/k3os
+- cd k3os && git checkout 0612b5cbfddbbf56ddf47e8c538e8ad4e1c52c31
+steps:
+- mkdir -p /usr/bin || true
+- cp -rfv k3os/install.sh /usr/bin/distro-install && chmod +x /usr/bin/distro-install
+includes:
+- /usr$
+- /usr/bin$
+- /usr/bin/distro-install

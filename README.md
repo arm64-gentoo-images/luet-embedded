@@ -58,4 +58,4 @@ To build the iso, we need to serve the package repository locally, so they can b
 
 Start the iso build process:
 
-    sudo LUET_PACKAGES="system/lml-init system/lml-boot distro/sabayon-live" make iso
+    sudo LUET_PACKAGES="system/lml-init system/lml-boot distro/sabayon-live system/luet-develop system/container-diff" make iso

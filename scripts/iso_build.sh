@@ -6,7 +6,7 @@
 IMAGE_NAME="${IMAGE_NAME:-luet_os.img}"
 LUET_PACKAGES="${LUET_PACKAGES:-}"
 LUET_BIN="${LUET_BIN:-../luet}"
-LUET_CONFIG="${LUET_CONFIG:-../conf/luet.yaml}"
+LUET_CONFIG="${LUET_CONFIG:-../conf/luet-local.yaml}"
 WORKDIR="$ROOT_DIR/isowork"
 OVERLAY="${OVERLAY:-false}"
 ML_CHECKOUT="${ML_CHECKOUT:-c0b5af7258be1c2650c4207e7dd4794aa45ebca6}"
@@ -209,6 +209,7 @@ luet_install() {
   mkdir -p var/lock
   mkdir -p run/lock
   mkdir -p var/cache/luet
+  mkdir -p var/luet
   mkdir -p etc/luet
   mkdir -p dev
   mkdir -p sys
