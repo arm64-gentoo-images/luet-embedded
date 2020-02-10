@@ -49,7 +49,7 @@ rebuild-all:
 
 .PHONY: create-repo
 create-repo:
-	sudo luet create-repo --tree "$(TREE)" \
+	sudo $(LUET) create-repo --tree "$(TREE)" \
     --output $(ROOT_DIR)/build \
     --packages $(ROOT_DIR)/build \
     --name "luet-embedded" \
