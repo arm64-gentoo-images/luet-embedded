@@ -229,7 +229,7 @@ luet_install() {
   sudo mount --bind /proc $rootfs/proc/
   sudo mount --bind /dev/pts $rootfs/dev/pts
 
-  sudo chroot . /luet --nolock=true install ${packages}
+  sudo chroot . /luet install ${packages}
       # Cleanup/umount
   umount_rootfs $rootfs || true
 
