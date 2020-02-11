@@ -57,7 +57,7 @@ mkdir -p $KERNEL_INSTALLED
 if [[ -L "$SRC_DIR/minimal_boot/bzImage" ]]
 then
 # Install the kernel file.
-cp $(readlink -f $SRC_DIR/minimal_boot/bzImage) \
+cp $SRC_DIR/minimal_boot/$(readlink -f $SRC_DIR/minimal_boot/bzImage) \
   $KERNEL_INSTALLED/kernel
 else 
 cp $SRC_DIR/minimal_boot/bzImage \
