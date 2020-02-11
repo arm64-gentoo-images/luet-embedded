@@ -1,0 +1,12 @@
+general:
+  debug: true
+system:
+  rootfs: /
+  database_path: "/var/luet/db"
+  database_engine: "boltdb"
+repositories:
+   - name: "main"
+     type: "http"
+     enable: true
+     urls:
+       - "https://dispatcher.sabayon.org/sbi/namespace/luet-embedded"

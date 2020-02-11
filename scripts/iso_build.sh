@@ -211,6 +211,12 @@ luet_install() {
   mkdir -p var/cache/luet
   mkdir -p var/luet
   mkdir -p etc/luet
+
+  # Required to connect to remote repositories
+  echo "nameserver 8.8.8.8" > etc/resolv.conf
+  mkdir -p etc/ssl/certs
+  cp -rfv /etc/ssl/certs/ca-certificates.crt etc/ssl/certs
+
   mkdir -p dev
   mkdir -p sys
   mkdir -p proc
