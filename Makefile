@@ -7,7 +7,7 @@ export ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 DESTINATION?=$(ROOT_DIR)/output
 TARGET?=targets
 COMPRESSION?=gzip
-CLEAN?=false
+CLEAN?=true
 TREE?=distro
 
 # For ARM image build script
