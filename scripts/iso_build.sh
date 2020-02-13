@@ -185,7 +185,7 @@ fi
 set -ex
 
 # Get calculation right
-#sed -i '/image_size=$((kernel_size + rootfs_size + loader_size + 65536))/c\image_size=$((kernel_size + rootfs_size*2 + loader_size + 65536))' 13_prepare_iso.sh
+sed -i '/image_size=$((kernel_size + rootfs_size + loader_size + 65536))/c\image_size=$((kernel_size + rootfs_size*2 + loader_size + 65536))' 13_prepare_iso.sh
 
 
 
