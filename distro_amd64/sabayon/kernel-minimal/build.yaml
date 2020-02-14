@@ -1,0 +1,22 @@
+# This kernel package is a minimal spec with kernel + overlayfs modules to allow mounting overlays from livecd
+unpack: true
+includes:
+# Kernel
+- /boot$|/boot/.*
+- /lib$
+- /lib/modules$
+- /lib/modules/5.4.0-sabayon/$
+- /lib/modules/5.4.0-sabayon/kernel/fs$
+- /lib/modules/5.4.0-sabayon/kernel/fs/overlayfs$
+- /lib/modules/5.4.0-sabayon/kernel/fs/overlayfs/.*
+- /lib/modules/5.4.0-sabayon/kernel/lib$
+- /lib/modules/5.4.0-sabayon/kernel/lib/.*
+
+requires:
+- category: "distro"
+  name: "sabayon-desktop"
+  version: ">=0.1"
+prelude:
+- equo up
+steps:
+- ACCEPT_LICENSE=* equo i sys-kernel/linux-sabayon:5.4 
