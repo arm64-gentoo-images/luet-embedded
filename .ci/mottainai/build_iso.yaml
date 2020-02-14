@@ -19,7 +19,7 @@ script:
 - popd
 - export LUET_CONFIG=$PWD/conf/luet-dso.yaml
 - make iso
-- cp -rfv isowork/minimal/src/minimal_linux_live.iso build/
+- cp -rfv luet_os.iso build/
 source: https://github.com/Luet-lab/luet-embedded
 tag_namespace: luet-embedded-iso
 type: lxd

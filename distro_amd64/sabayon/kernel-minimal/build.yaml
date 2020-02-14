@@ -5,7 +5,8 @@ includes:
 - /boot$|/boot/.*
 - /lib$
 - /lib/modules$
-- /lib/modules/5.4.0-sabayon/$
+- /lib/modules/5.4.0-sabayon$
+- /lib/modules/5.4.0-sabayon/kernel$
 - /lib/modules/5.4.0-sabayon/kernel/fs$
 - /lib/modules/5.4.0-sabayon/kernel/fs/overlayfs$
 - /lib/modules/5.4.0-sabayon/kernel/fs/overlayfs/.*
