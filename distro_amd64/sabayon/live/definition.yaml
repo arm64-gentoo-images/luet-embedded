@@ -5,3 +5,6 @@ requires:
 - category: "distro"
   name: "sabayon-desktop"
   version: ">=0.1"
+- category: "distro"
+  name: "sabayon-kernel"
+  version: ">=0.1"

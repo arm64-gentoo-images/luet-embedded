@@ -1,9 +1,5 @@
 unpack: true
 includes:
-# Kernel
-- /boot$|/boot/.*
-#- /lib/firmware$|/lib/firmware/.*
-#- /lib/modules$|/lib/firmware/.*
 # Dbus, needed by systemd-logind to reach multi-user target ( equo q files sys-apps/dbus -q > dbus.txt ):
 - /etc$
 - /etc/X11$
@@ -166,6 +162,6 @@ requires:
 prelude:
 - equo up
 steps:
-- ACCEPT_LICENSE=* equo i sys-kernel/linux-sabayon-5.4.10 sabayon-dracut sys-boot/plymouth x11-themes/sabayon-artwork-plymouth-default sys-apps/dbus
-- bash rebuild_dracut.sh
+- ACCEPT_LICENSE=* equo i sys-boot/plymouth x11-themes/sabayon-artwork-plymouth-default sys-apps/dbus
+#- bash rebuild_dracut.sh  (equo i first sabayon-dracut )
 - cp -rfv setup.sh /live_setup.sh
