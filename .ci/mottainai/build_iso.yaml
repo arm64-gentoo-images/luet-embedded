@@ -4,21 +4,24 @@ artefact_path: build
 cache_clean: "yes"
 environment:
 - TREE=distro_amd64
-- LUET_PACKAGES=system/lml-init system/lml-boot distro/sabayon-live system/luet-develop
+- LUET_PACKAGES=system/sabayon-init system/lml-boot distro/sabayon-live system/luet-develop system/container-diff
+- OVERLAY=true
+- FIRST_STAGE=distro/sabayon-kernel-minimal system/sabayon-init system/lml-boot distro/seed
+- IMAGE_NAME=luet_os.iso
 image: sabayon/ci
 script:
 - source /etc/profile
 - export TMPDIR=/var/tmp/luet
 - mkdir -p $TMPDIR
 - ACCEPT_LICENSE=* equo up
-- ACCEPT_LICENSE=* equo i dev-libs/libisoburn sys-fs/dosfstools
+- ACCEPT_LICENSE=* equo i dev-libs/libisoburn sys-fs/dosfstools sys-fs/squashfs-tools
 - git clone https://github.com/mudler/luet
 - pushd luet
 - make build
 - cp -rfv luet /usr/bin/luet
 - popd
 - export LUET_CONFIG=$PWD/conf/luet-dso.yaml
-- IMAGE_NAME=luet_os.iso make iso
+- make iso
 - cp -rfv luet_os.iso build/
 source: https://github.com/Luet-lab/luet-embedded
 tag_namespace: luet-embedded-iso
