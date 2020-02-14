@@ -25,6 +25,7 @@
 #                    +--(2) /bin/sh (Alt + F4)
 
 echo -e "Welcome to \\e[1mSabayon \\e[32mLinux \\e[31mLive\\e[0m (/init)"
+echo "root:sabayon"|chpasswd
 
 # Let's mount all core file systems.
 /etc/01_prepare.sh
