@@ -155,13 +155,6 @@ for DEVICE in /dev/* ; do
 
     LOOP_DEVICE=$(losetup -f)
     losetup $LOOP_DEVICE $DEVICE_MNT/rootfs.squashfs
-
-    modprobe squashfs
-    OUT=$?
-    if [ ! "$OUT" = "0" ] ; then
-      echo -e "  \\e[31mModprobe failed (squashfs).\\e[0m"
-    fi
-    
     mount $LOOP_DEVICE $IMAGE_MNT -t squashfs
     OUT=$?
     if [ ! "$OUT" = "0" ] ; then
