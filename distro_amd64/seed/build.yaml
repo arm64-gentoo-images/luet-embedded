@@ -1,5 +1,4 @@
 unpack: true
-image: "alpine"
 includes:
 - /bin$|/bin/.*
 - /etc$|/etc/.*
@@ -15,3 +14,7 @@ includes:
 - /tmp$|/tmp/.*  
 - /usr$|/usr/.*
 - /var$|/var/.*
+requires:
+- category: "distro"
+  name: "alpine"
+  version: "3.11.3"
