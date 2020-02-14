@@ -201,4 +201,5 @@ sed -i 's/OVERLAY_TYPE=folder/OVERLAY_TYPE=sparse/g' .config
 
 bash build_minimal_linux_live.sh
 
+pushd $ROOT_DIR
 mv isowork/minimal/src/minimal_linux_live.iso "${IMAGE_NAME}"

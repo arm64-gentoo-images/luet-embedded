@@ -18,7 +18,7 @@ script:
 - cp -rfv luet /usr/bin/luet
 - popd
 - export LUET_CONFIG=$PWD/conf/luet-dso.yaml
-- make iso
+- IMAGE_NAME=luet_os.iso make iso
 - cp -rfv luet_os.iso build/
 source: https://github.com/Luet-lab/luet-embedded
 tag_namespace: luet-embedded-iso
