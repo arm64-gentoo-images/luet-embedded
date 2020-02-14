@@ -3,7 +3,7 @@
 # https://github.com/Tomas-M/linux-live.git
 # http://minimal.linux-bg.org/#home
 
-IMAGE_NAME="${IMAGE_NAME:-luet_os.img}"
+IMAGE_NAME="${IMAGE_NAME:-luet_os.iso}"
 LUET_PACKAGES="${LUET_PACKAGES:-}"
 LUET_BIN="${LUET_BIN:-../luet}"
 LUET_CONFIG="${LUET_CONFIG:-../conf/luet-local.yaml}"
@@ -22,6 +22,9 @@ pushd $WORKDIR/minimal/src
 
 rm -rf "$WORKDIR/minimal/src/minimal_rootfs/"
 mkdir -p "$WORKDIR/minimal/src/minimal_rootfs/"
+
+rm -rf "$WORKDIR/minimal/src/minimal_overlay/rootfs"
+mkdir -p "$WORKDIR/minimal/src/minimal_overlay/rootfs"
 
 echo "Initial root:"
 ls -liah  "$WORKDIR/minimal/src/minimal_rootfs/"
@@ -106,76 +109,9 @@ echo "Overlay: $OVERLAY_ROOTFS $OVERLAY_LOCATION $OVERLAY_TYPE"
 export OVERLAY_TYPE=sparse
 mkdir -p $OVERLAY_ROOTFS
 touch $OVERLAY_ROOTFS/.keep
-ls -liah $OVERLAY_ROOTFS
-if [ "$OVERLAY_LOCATION" = "iso" ] && \
-   [ "$OVERLAY_TYPE" = "sparse" ] && \
-   [ -d $OVERLAY_ROOTFS ] && \
-   [ ! "`ls -A $OVERLAY_ROOTFS`" = "" ] && \
-   [ "$(id -u)" = "0" ] ; then
+ls -liah $SRC_DIR/minimal_overlay/rootfs/
 
-  # Use sparse file as storage place. The above check guarantees that the whole
-  # script is executed with root permissions or otherwise this block is skipped.
-  # All files and folders located in the folder 'minimal_overlay' will be merged
-  # with the root folder on boot.
-
-  echo "Using sparse file for overlay."
-
-  # This is the Busybox executable that we have already generated.
-  BUSYBOX=$ROOTFS/bin/busybox
-
-  # Create sparse image file with 3MB size. Note that this increases the ISO
-  # image size.
-  truncate -s 3G $ISOIMAGE_OVERLAY/minimal.img
-
-  # Find available loop device.
-  LOOP_DEVICE=$(losetup -f)
-
-  # Associate the available loop device with the sparse image file.
-  losetup $LOOP_DEVICE $ISOIMAGE_OVERLAY/minimal.img
-
-  # Format the sparse image file with Ext2 file system.
-  mkfs.ext2 $LOOP_DEVICE
-
-  # Mount the sparse file in folder 'sparse".
-  mkdir $ISOIMAGE_OVERLAY/sparse
-  mount $ISOIMAGE_OVERLAY/minimal.img sparse
-
-  # Create the overlay folders.
-  mkdir -p $ISOIMAGE_OVERLAY/sparse/rootfs
-  mkdir -p $ISOIMAGE_OVERLAY/sparse/work
-
-  cp -r $SRC_DIR/minimal_overlay/rootfs/* \
-    $ISOIMAGE_OVERLAY/sparse/rootfs
-
-  # Unmount the sparse file and delete the temporary folder.
-  sync
-  umount $ISOIMAGE_OVERLAY/sparse
-  sync
-  sleep 1
-  rm -rf $ISOIMAGE_OVERLAY/sparse
-
-  # Detach the loop device since we no longer need it.
-  losetup -d $LOOP_DEVICE
-elif [ "$OVERLAY_LOCATION" = "iso" ] && \
-     [ "$OVERLAY_TYPE" = "folder" ] && \
-     [ -d $OVERLAY_ROOTFS ] && \
-     [ ! "`ls -A $OVERLAY_ROOTFS`" = "" ] ; then
-
-  # Use normal folder structure for overlay. All files and folders located in
-  # the folder 'minimal_overlay' will be merged with the root folder on boot.
-
-  echo "Using folder structure for overlay."
-
-  # Create the overlay folders.
-  mkdir -p $ISOIMAGE_OVERLAY/minimal/rootfs
-  mkdir -p $ISOIMAGE_OVERLAY/minimal/work
-
-  cp -r $SRC_DIR/minimal_overlay/rootfs/* \
-    $ISOIMAGE_OVERLAY/minimal/rootfs
-else
-  echo "The ISO image will have no overlay structure."
-fi
-
+mksquashfs "$SRC_DIR/minimal_overlay/rootfs/" $ISOIMAGE_OVERLAY/rootfs.squashfs -b 1024k -comp xz -Xbcj x86 -e boot
 cd $SRC_DIR
 
 echo "*** GENERATE OVERLAY END ***"
@@ -264,3 +200,5 @@ sed -i 's/OVERLAY_TYPE=folder/OVERLAY_TYPE=sparse/g' .config
 
 
 bash build_minimal_linux_live.sh
+
+mv isowork/minimal/src/minimal_linux_live.iso "${IMAGE_NAME}"
