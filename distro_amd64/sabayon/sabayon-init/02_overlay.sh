@@ -225,7 +225,7 @@ if [ ! -e "/mnt/etc/03_init.sh" ]; then
   export PID1_SHELL=true
 
   # Interactive shell with controlling tty as PID 1.
-  exec setsid cttyhack sh
+  exec setsid sh
 fi
 
 # The new mountpoint becomes file system root. All original root folders are
