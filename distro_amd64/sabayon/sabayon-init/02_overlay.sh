@@ -218,6 +218,16 @@ mount --move /proc /mnt/proc
 mount --move /tmp /mnt/tmp
 echo -e "Mount locations \\e[94m/dev\\e[0m, \\e[94m/sys\\e[0m, \\e[94m/tmp\\e[0m and \\e[94m/proc\\e[0m have been moved to \\e[94m/mnt\\e[0m."
 
+if [ ! -e "/mnt/etc/03_init.sh" ]; then
+  echo -e "  \\e[31mRootfs not found, dropping to emergency shell\\e[0m"
+
+  # Set flag which indicates that we have obtained controlling terminal.
+  export PID1_SHELL=true
+
+  # Interactive shell with controlling tty as PID 1.
+  exec setsid cttyhack sh
+fi
+
 # The new mountpoint becomes file system root. All original root folders are
 # deleted automatically as part of the command execution. The '/sbin/init'
 # process is invoked and it becomes the new PID 1 parent process.
