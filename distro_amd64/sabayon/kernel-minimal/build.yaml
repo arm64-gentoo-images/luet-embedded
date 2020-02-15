@@ -27,6 +27,8 @@ includes:
 - /lib/modules/5.4.0-sabayon/kernel/drivers/usb/storage/.*
 - /lib/modules/5.4.0-sabayon/kernel/drivers/usb/host$
 - /lib/modules/5.4.0-sabayon/kernel/drivers/usb/host/.*
+- /lib/modules/5.4.0-sabayon/kernel/drivers/usb/common$
+- /lib/modules/5.4.0-sabayon/kernel/drivers/usb/common/.*
 
 requires:
 - category: "distro"
