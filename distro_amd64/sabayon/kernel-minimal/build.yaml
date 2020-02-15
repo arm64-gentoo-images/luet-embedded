@@ -23,6 +23,7 @@ includes:
 - /lib/modules/5.4.0-sabayon/kernel$
 - /lib/modules/5.4.0-sabayon/kernel/drivers$
 - /lib/modules/5.4.0-sabayon/kernel/drivers/usb$
+- /lib/modules/5.4.0-sabayon/kernel/drivers/usb/.*
 - /lib/modules/5.4.0-sabayon/kernel/drivers/usb/storage$
 - /lib/modules/5.4.0-sabayon/kernel/drivers/usb/storage/.*
 - /lib/modules/5.4.0-sabayon/kernel/drivers/usb/host$
