@@ -63,11 +63,24 @@ DEFAULT_OVERLAY_DIR="/tmp/minimal/overlay"
 DEFAULT_UPPER_DIR="/tmp/minimal/rootfs"
 DEFAULT_WORK_DIR="/tmp/minimal/work"
 
+depmod -a
+
 modprobe uas
 modprobe usb_storage
 modprobe usbcore
 modprobe scsi_mod
 modprobe usb_common
+modprobe sd_mod
+modprobe ehci_hcd
+modprobe uhci_hcd
+modprobe ohci_hcd
+modprobe ehci_pci
+modprobe virtio_blk
+modprobe virtio_pci
+modprobe part_msdos
+modprobe usbms
+
+sleep 7
 
 echo "Searching available devices for overlay content."
 for DEVICE in /dev/* ; do
