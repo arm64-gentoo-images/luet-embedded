@@ -211,12 +211,6 @@ for DEVICE in /dev/* ; do
   rm -rf $DEVICE_MNT 2>/dev/null
 done
 
-# Move critical file systems to the new mountpoint.
-mount --move /dev /mnt/dev
-mount --move /sys /mnt/sys
-mount --move /proc /mnt/proc
-mount --move /tmp /mnt/tmp
-echo -e "Mount locations \\e[94m/dev\\e[0m, \\e[94m/sys\\e[0m, \\e[94m/tmp\\e[0m and \\e[94m/proc\\e[0m have been moved to \\e[94m/mnt\\e[0m."
 
 if [ ! -e "/mnt/etc/03_init.sh" ]; then
   echo -e "  \\e[31mRootfs not found, dropping to emergency shell\\e[0m"
@@ -227,6 +221,13 @@ if [ ! -e "/mnt/etc/03_init.sh" ]; then
   # Interactive shell with controlling tty as PID 1.
   exec setsid sh
 fi
+
+# Move critical file systems to the new mountpoint.
+mount --move /dev /mnt/dev
+mount --move /sys /mnt/sys
+mount --move /proc /mnt/proc
+mount --move /tmp /mnt/tmp
+echo -e "Mount locations \\e[94m/dev\\e[0m, \\e[94m/sys\\e[0m, \\e[94m/tmp\\e[0m and \\e[94m/proc\\e[0m have been moved to \\e[94m/mnt\\e[0m."
 
 # The new mountpoint becomes file system root. All original root folders are
 # deleted automatically as part of the command execution. The '/sbin/init'
