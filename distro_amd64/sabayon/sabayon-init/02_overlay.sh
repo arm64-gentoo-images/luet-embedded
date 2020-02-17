@@ -75,6 +75,8 @@ modprobe ehci_hcd
 modprobe uhci_hcd
 modprobe ohci_hcd
 modprobe ehci_pci
+modprobe xhci_pci
+modprobe xhci_hcd
 modprobe virtio_blk
 modprobe virtio_pci
 modprobe part_msdos
