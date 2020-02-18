@@ -63,24 +63,24 @@ DEFAULT_OVERLAY_DIR="/tmp/minimal/overlay"
 DEFAULT_UPPER_DIR="/tmp/minimal/rootfs"
 DEFAULT_WORK_DIR="/tmp/minimal/work"
 
-depmod -a
+depmod -a 2>/dev/null
 
-modprobe uas
-modprobe usb_storage
-modprobe usbcore
-modprobe scsi_mod
-modprobe usb_common
-modprobe sd_mod
-modprobe ehci_hcd
-modprobe uhci_hcd
-modprobe ohci_hcd
-modprobe ehci_pci
-modprobe xhci_pci
-modprobe xhci_hcd
-modprobe virtio_blk
-modprobe virtio_pci
-modprobe part_msdos
-modprobe usbms
+modprobe uas 2>/dev/null
+modprobe usb_storage 2>/dev/null
+modprobe usbcore 2>/dev/null
+modprobe scsi_mod 2>/dev/null
+modprobe usb_common 2>/dev/null
+modprobe sd_mod 2>/dev/null
+modprobe ehci_hcd 2>/dev/null
+modprobe uhci_hcd 2>/dev/null
+modprobe ohci_hcd 2>/dev/null
+modprobe ehci_pci 2>/dev/null
+modprobe xhci_pci 2>/dev/null
+modprobe xhci_hcd 2>/dev/null
+modprobe virtio_blk 2>/dev/null
+modprobe virtio_pci 2>/dev/null
+modprobe part_msdos 2>/dev/null
+modprobe usbms 2>/dev/null
 
 sleep 7
 
