@@ -11,6 +11,7 @@ repositories:
      priority: 1
      urls:
        - "https://raw.githubusercontent.com/Luet-lab/luet-repo/gh-pages"
+       - "https://gitlab.com/luet-lab/luet-repo/-/raw/gh-pages/"
    - name: "main"
      type: "http"
      enable: true
