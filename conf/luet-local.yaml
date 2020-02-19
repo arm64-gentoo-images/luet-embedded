@@ -1,9 +1,5 @@
 general:
   debug: true
-system:
-  rootfs: /
-  database_path: "/var/luet/db"
-  database_engine: "boltdb"
 repositories:
    - name: "main"
      type: "http"

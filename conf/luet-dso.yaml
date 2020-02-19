@@ -1,9 +1,6 @@
 general:
   debug: true
-system:
-  rootfs: /
-  database_path: "/var/luet/db"
-  database_engine: "boltdb"
+
 repositories:
    - name: "luet"
      type: "http"
@@ -11,7 +8,6 @@ repositories:
      priority: 1
      urls:
        - "https://raw.githubusercontent.com/Luet-lab/luet-repo/gh-pages"
-       - "https://gitlab.com/luet-lab/luet-repo/-/raw/gh-pages/"
    - name: "main"
      type: "http"
      enable: true
