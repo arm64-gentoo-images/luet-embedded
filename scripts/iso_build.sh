@@ -3,126 +3,28 @@
 # https://github.com/Tomas-M/linux-live.git
 # http://minimal.linux-bg.org/#home
 
-IMAGE_NAME="${IMAGE_NAME:-luet_os.iso}"
-LUET_PACKAGES="${LUET_PACKAGES:-}"
-LUET_BIN="${LUET_BIN:-../luet}"
-LUET_CONFIG="${LUET_CONFIG:-../conf/luet-local.yaml}"
-WORKDIR="$ROOT_DIR/isowork"
-OVERLAY="${OVERLAY:-false}"
-ML_CHECKOUT="${ML_CHECKOUT:-c0b5af7258be1c2650c4207e7dd4794aa45ebca6}"
-mkdir -p $WORKDIR
+export IMAGE_NAME="${IMAGE_NAME:-luet_os.iso}"
+export LUET_PACKAGES="${LUET_PACKAGES:-}"
+export LUET_BIN="${LUET_BIN:-../luet}"
+export LUET_CONFIG="${LUET_CONFIG:-../conf/luet-local.yaml}"
+export WORKDIR="$ROOT_DIR/isowork"
+export OVERLAY="${OVERLAY:-false}"
+export FIRMWARE_TYPE="${FIRMWARE_TYPE:-both}"
 
-FIRST_STAGE="${FIRST_STAGE:-distro/seed}"
-[ ! -d "$WORKDIR/minimal" ] && git clone https://github.com/ivandavidov/minimal.git $WORKDIR/minimal
+export ARCH="${ARCH:-x86_64}"
+export ISOIMAGE_PACKAGES="${ISOIMAGE_PACKAGES:-live/syslinux}"
+export UEFI_PACKAGES="${UEFI_PACKAGES:-live/systemd-boot}"
 
-pushd $WORKDIR/minimal
-git checkout "${ML_CHECKOUT}" || true
-popd
-pushd $WORKDIR/minimal/src
+export BOOT_DIR="$WORKDIR/boot"
+export ROOTFS_DIR="$WORKDIR/rootfs"
+export OVERLAY_DIR="$WORKDIR/overlay"
+export ISOIMAGE="$WORKDIR/isoimage"
 
-rm -rf "$WORKDIR/minimal/src/minimal_rootfs/"
-mkdir -p "$WORKDIR/minimal/src/minimal_rootfs/"
+export KERNEL_INSTALLED=$WORKDIR/kernel/kernel_installed
 
-rm -rf "$WORKDIR/minimal/src/minimal_overlay/rootfs"
-mkdir -p "$WORKDIR/minimal/src/minimal_overlay/rootfs"
+export FIRST_STAGE="${FIRST_STAGE:-distro/seed}"
 
-echo "Initial root:"
-ls -liah  "$WORKDIR/minimal/src/minimal_rootfs/"
-
-
-rm -rf "$WORKDIR/minimal/src/minimal_boot/"
-mkdir -p "$WORKDIR/minimal/src/minimal_boot/"
-
-echo "Initial boot:"
-ls -liah  "$WORKDIR/minimal/src/minimal_boot/"
-
-# We skip kernel compilation and rootfs preparation. We are going to use luet for that
-# We also skip docker image generation, everything is built by Docker already.
-rm -rfv 01* 02* 03* 04* 05* 06* 07* 08* 09* 11* 15*
-
-# Point to our kernel/rootfs
-cat <<'EOF' > 09_prepare.sh
-#!/bin/sh
-
-set -e
-
-# Load common properties and functions in the current script.
-. ./common.sh
-
-echo "**** Copy kernel"
-# Prepare the kernel install area.
-echo "Removing old kernel artifacts. This may take a while."
-rm -rf $KERNEL_INSTALLED
-mkdir -p $KERNEL_INSTALLED
-
-
-
-if [[ -L "$SRC_DIR/minimal_boot/bzImage" ]]
-then
-
-bz=$(readlink -f $SRC_DIR/minimal_boot/bzImage)
-# Install the kernel file.
-cp $SRC_DIR/minimal_boot/$(basename $bz) \
-  $KERNEL_INSTALLED/kernel
-else 
-cp $SRC_DIR/minimal_boot/bzImage \
-  $KERNEL_INSTALLED/kernel
-fi
-echo "*** GENERATE ROOTFS BEGIN ***"
-
-
-echo "Preparing rootfs work area. This may take a while."
-mkdir -p $ROOTFS
-
-# Copy all rootfs resources to the location of our 'rootfs' folder.
-cp -r $SRC_DIR/minimal_rootfs/* $ROOTFS
-EOF
-chmod +x 09_prepare.sh
-
-if [[ "$OVERLAY" == true ]]; then
-
-cat <<'EOF' > 11_overlay.sh
-
-#!/bin/sh
-
-set -e
-
-# Load common properties and functions in the current script.
-. ./common.sh
-
-echo "*** GENERATE OVERLAY BEGIN ***"
-
-# Remove the old ISO image overlay area.
-echo "Removing old overlay area. This may take a while."
-rm -rf $ISOIMAGE_OVERLAY
-
-# Create the new ISO image overlay area.
-mkdir -p $ISOIMAGE_OVERLAY
-cd $ISOIMAGE_OVERLAY
-
-# Read the 'OVERLAY_TYPE' property from '.config'
-OVERLAY_TYPE=`read_property OVERLAY_TYPE`
-
-# Read the 'OVERLAY_LOCATION' property from '.config'
-OVERLAY_LOCATION=`read_property OVERLAY_LOCATION`
-echo "Overlay: $OVERLAY_ROOTFS $OVERLAY_LOCATION $OVERLAY_TYPE"
-export OVERLAY_TYPE=sparse
-mkdir -p $OVERLAY_ROOTFS
-touch $OVERLAY_ROOTFS/.keep
-ls -liah $SRC_DIR/minimal_overlay/rootfs/
-
-mksquashfs "$SRC_DIR/minimal_overlay/rootfs/" $ISOIMAGE_OVERLAY/rootfs.squashfs -b 1024k -comp xz -Xbcj x86 -e boot
-cd $SRC_DIR
-
-echo "*** GENERATE OVERLAY END ***"
-EOF
-chmod +x 11_overlay.sh
-fi
-set -ex
-
-# Get calculation right
-sed -i '/image_size=$((kernel_size + rootfs_size + loader_size + 65536))/c\image_size=$((kernel_size + rootfs_size*2 + loader_size + 65536))' 13_prepare_iso.sh
-
+export GEN_ROOTFS="${GEN_ROOTFS:-true}"
 
 
 umount_rootfs() {
@@ -143,7 +45,7 @@ luet_install() {
   ## Initial rootfs
   pushd "$rootfs"
   mkdir -p boot
-  mount --bind $WORKDIR/minimal/src/minimal_boot boot
+  mount --bind $BOOT_DIR boot
   mkdir -p var/lock
   mkdir -p run/lock
   mkdir -p var/cache/luet
@@ -168,6 +70,8 @@ luet_install() {
   sudo mount --bind /dev/pts $rootfs/dev/pts
 
   sudo chroot . /luet install ${packages}
+  sudo chroot . /luet cleanup
+
       # Cleanup/umount
   umount_rootfs $rootfs || true
 
@@ -180,26 +84,51 @@ trap cleanup 1 2 3 6
 
 cleanup()
 {
-   umount_rootfs  "$WORKDIR/minimal/src/minimal_rootfs"
-   umount_rootfs  "$WORKDIR/minimal/src/minimal_overlay/rootfs"
+   umount_rootfs  "$ROOTFS_DIR"
+   umount_rootfs  "$OVERLAY_DIR"
 }
 
 
-if [[ "$OVERLAY" == true ]]; then
-echo "Building overlay"
-luet_install "$WORKDIR/minimal/src/minimal_rootfs" "${FIRST_STAGE}"
-luet_install "$WORKDIR/minimal/src/minimal_overlay/rootfs" "${LUET_PACKAGES}" || true
-else
 
-luet_install "$WORKDIR/minimal/src/minimal_rootfs" "${LUET_PACKAGES}" || true
+if [[ "$GEN_ROOTFS" == true ]]; then
+
+mkdir -p $WORKDIR
+
+rm -rf "$ROOTFS_DIR"
+mkdir -p "$ROOTFS_DIR"
+
+rm -rf "$OVERLAY_DIR"
+mkdir -p "$OVERLAY_DIR"
+
+echo "Initial root:"
+ls -liah  "$ROOTFS_DIR"
+ls -liah  "$OVERLAY_DIR"
+
+rm -rf $BOOT_DIR
+mkdir -p $BOOT_DIR
+
+echo "Initial boot:"
+ls -liah  "$BOOT_DIR"
+
+
+set -ex
+
+
+  if [[ "$OVERLAY" == true ]]; then
+  echo "Building overlay"
+    luet_install "$ROOTFS_DIR" "${FIRST_STAGE}"
+    luet_install "$OVERLAY_DIR" "${LUET_PACKAGES}" || true
+  else
+    luet_install "$ROOTFS_DIR" "${LUET_PACKAGES}" || true
+  fi
+
 fi
-set -e
-# UEFI too
-sed -i 's/FIRMWARE_TYPE=bios/FIRMWARE_TYPE=both/g' .config
-sed -i 's/OVERLAY_TYPE=folder/OVERLAY_TYPE=sparse/g' .config
 
+set +x
 
-bash build_minimal_linux_live.sh
+for script in $(ls scripts/iso | grep '^[0-9]*_.*.sh'); do
+  echo "Executing script '$script'."
+  ./scripts/iso/$script
+done
 
-pushd $ROOT_DIR
-mv isowork/minimal/src/minimal_linux_live.iso "${IMAGE_NAME}"
+#bash build_minimal_linux_live.sh
