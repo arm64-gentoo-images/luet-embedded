@@ -6,6 +6,7 @@ steps:
 - mkdir -p /boot/syslinux
 - mv /syslinux/syslinux-6.03/bios/core/isolinux.bin /boot/syslinux
 - mv /syslinux/syslinux-6.03/bios/com32/elflink/ldlinux/ldlinux.c32 /boot/syslinux
+- mv /syslinux/syslinux-6.03/bios/mbr/isohdpfx.bin /boot/syslinux
 includes:
 - /boot$|/boot/.*
 requires:
