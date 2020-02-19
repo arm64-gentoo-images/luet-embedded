@@ -85,10 +85,10 @@ prepare_boot_uefi() {
   # Find the initramfs size in bytes.
   rootfs_size=`du -b $WORKDIR/rootfs.cpio.xz | awk '{print \$1}'`
 
-  loader_size=`du -b $WORKDIR/uefitmp | awk '{print \$1}'`
+  loader_size=`du -bs $WORKDIR/uefitmp | awk '{print \$1}'`
 
   # The EFI boot image is 64KB bigger than the kernel size.
-  image_size=$((kernel_size + rootfs_size + loader_size + 65536)) ## XXX: rootfsize is doubled
+  image_size=$((kernel_size + rootfs_size*2 + loader_size + 65536)) ## XXX: rootfsize is doubled
 
   echo "Creating UEFI boot image file '$WORKDIR/uefi.img'."
   rm -f $WORKDIR/uefi.img
