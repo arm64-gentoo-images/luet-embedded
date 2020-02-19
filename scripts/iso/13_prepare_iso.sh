@@ -10,7 +10,7 @@ luet_install() {
   cat <<EOF >> "$rootfs/luet.yaml"
 system:
   rootfs: $rootfs
-  database_path: "$rootfs/luetdb"
+  database_path: "/luetdb"
   database_engine: "boltdb"
 EOF
   ${LUET_BIN} install  --config "$rootfs/luet.yaml" ${packages}

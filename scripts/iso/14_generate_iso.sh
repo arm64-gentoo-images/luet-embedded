@@ -11,7 +11,7 @@ uefi() {
   # Now we generate 'hybrid' ISO image file which can also be used on
   # USB flash drive, e.g. 'dd if=minimal_linux_live.iso of=/dev/sdb'.
   xorriso -as mkisofs \
-    -isohybrid-mbr $ISOIMAGE/bios/mbr/isohdpfx.bin \
+    -isohybrid-mbr $ISOIMAGE/boot/syslinux/isohdpfx.bin \
     -c boot/boot.cat \
     -e boot/uefi.img \
       -no-emul-boot \
@@ -27,7 +27,7 @@ bios() {
   # Now we generate 'hybrid' ISO image file which can also be used on
   # USB flash drive, e.g. 'dd if=minimal_linux_live.iso of=/dev/sdb'.
   xorriso -as mkisofs \
-    -isohybrid-mbr $ISOIMAGE/bios/mbr/isohdpfx.bin \
+    -isohybrid-mbr $ISOIMAGE/boot/syslinux/isohdpfx.bin \
     -c boot/syslinux/boot.cat \
     -b boot/syslinux/isolinux.bin \
       -no-emul-boot \
@@ -42,7 +42,7 @@ both() {
   cd $ISOIMAGE
 
   xorriso -as mkisofs \
-    -isohybrid-mbr $ISOIMAGE/bios/mbr/isohdpfx.bin \
+    -isohybrid-mbr $ISOIMAGE/boot/syslinux/isohdpfx.bin \
     -c boot/syslinux/boot.cat \
     -b boot/syslinux/isolinux.bin \
       -no-emul-boot \
@@ -81,8 +81,6 @@ case $FIRMWARE_TYPE in
     exit 1
     ;;
 esac
-
-cd $ROOT_DIR
 
 cat << CEOF
 
