@@ -62,7 +62,8 @@ prepare_boot_bios() {
   # you may not end up with UEFI shell even if your system supports it.
   # In this case MLL will not boot and you will end up with some kind of
   # UEFI error message.
-  luet_install $ISOIMAGE $ISOIMAGE_PACKAGES
+ 
+  luet_install $ISOIMAGE "$ISOIMAGE_PACKAGES"
 }
 
 # Genrate 'El Torito' boot image as per UEFI sepcification 2.7,
@@ -75,9 +76,10 @@ prepare_boot_uefi() {
   # names are described in UEFI specification 2.7, section 3.5.1.1.
   # Note that the x86_64 UEFI image file name indeed contains small
   # letter 'x'.
-   rm -rf $WORKDIR/uefitmp
+  rm -rf $WORKDIR/uefitmp
   mkdir -p $WORKDIR/uefitmp
-  luet_install $WORKDIR/uefitmp $UEFI_PACKAGES
+
+  luet_install $WORKDIR/uefitmp "$UEFI_PACKAGES"
 
   # Find the kernel size in bytes.
   kernel_size=`du -b $KERNEL_INSTALLED/kernel | awk '{print \$1}'`
