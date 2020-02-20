@@ -7,9 +7,8 @@ prelude:
 - apk --no-cache add ca-certificates tar gzip wget xz rsync git
 - git clone https://github.com/ivandavidov/minimal.git
 - cd minimal && git checkout e4ab26d8ee2e9e2e24d47852474d453b19cb0ced
-- rm -rf /boot || true
+- rm -rfv /boot || true
 steps:
-- mkdir /boot
 - mv minimal/src/minimal_boot/ /boot/
 # Needed during ISOIMAGE creation
 - cp -rfv /boot/bios/* /
