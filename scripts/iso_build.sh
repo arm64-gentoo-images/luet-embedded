@@ -12,8 +12,8 @@ export OVERLAY="${OVERLAY:-false}"
 export FIRMWARE_TYPE="${FIRMWARE_TYPE:-both}"
 
 export ARCH="${ARCH:-x86_64}"
-export ISOIMAGE_PACKAGES="${ISOIMAGE_PACKAGES:-live/syslinux}"
-export UEFI_PACKAGES="${UEFI_PACKAGES:-live/systemd-boot}"
+export ISOIMAGE_PACKAGES="${ISOIMAGE_PACKAGES:-live/syslinux system/sabayon-live-boot}"
+export UEFI_PACKAGES="${UEFI_PACKAGES:-live/systemd-boot system/sabayon-live-boot}"
 
 export BOOT_DIR="$WORKDIR/boot"
 export ROOTFS_DIR="$WORKDIR/rootfs"
