@@ -1,4 +1,7 @@
 build/
 workdir/
 *.img
+*.iso
+*.iso.*
 isowork
+targets
