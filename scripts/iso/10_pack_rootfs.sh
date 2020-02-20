@@ -2,7 +2,7 @@
 
 set -ex
 
-XZ="${XZ:-pxz}"
+XZ="${XZ:-xz}"
 
 echo "*** PACK ROOTFS BEGIN ***"
 

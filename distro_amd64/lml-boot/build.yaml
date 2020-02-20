@@ -11,9 +11,9 @@ prelude:
 - rm -rf /boot || true
 steps:
 - mkdir /boot
-- cp minimal/src/minimal_boot /boot
+- cp -rfv minimal/src/minimal_boot /boot
 # Needed during ISOIMAGE creation
-- cp -rfv /boot/bios/.* /
+- cp -rfv /boot/bios/* /
 - cp -rfv /boot/uefi/loader /
 includes:
 - /boot$|/boot/.*
