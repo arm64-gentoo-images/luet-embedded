@@ -14,5 +14,12 @@ steps:
 - sed -i 's/Minimal/Sabayon/g' /boot/bios/boot/syslinux/syslinux.cfg
 - sed -i 's/Minimal/Sabayon/g' /boot/uefi/loader/entries/mll-x86.conf
 - sed -i 's/Minimal/Sabayon/g' /boot/uefi/loader/entries/mll-x86_64.conf
+# Needed during ISOIMAGE creation
+- cp -rfv /boot/bios/.* /
+- cp -rfv /boot/uefi/loader /
 includes:
 - /boot$|/boot/.*
+# Needed ISOIMAGE
+- /EFI$|/EFI/.*
+- /loader$|/loader/.*
+
