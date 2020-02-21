@@ -9,7 +9,7 @@ TARGET?=targets
 COMPRESSION?=gzip
 CLEAN?=true
 TREE?=distro
-BUILD_ARGS?=
+BUILD_ARGS?=--pull --image-repository sabayonarm/luetcache
 SUDO?=sudo
 
 # For ARM image build script
