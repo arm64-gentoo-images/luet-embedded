@@ -159,5 +159,6 @@ requires:
   name: "sabayon-desktop"
   version: ">=0.1"
 
+steps:
 #- bash rebuild_dracut.sh  (equo i first sabayon-dracut )
 - cp -rfv setup.sh /live_setup.sh
