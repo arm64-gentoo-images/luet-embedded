@@ -186,6 +186,18 @@ for conf in 00-sabayon.package.use 00-sabayon.package.mask \
 	fi
 done
 
+### XXX: The base layer doesn't ship shadow files etc.
+### We run in the finalizer this step so it gets applied in runtime only if no users/groups are setted up in the machine
+if [ ! -e "/etc/shadow" ]; then
+	cp -rfv /etc/shadow.defaults /etc/shadow
+fi
+if [ ! -e "/etc/passwd" ]; then
+	cp -rfv /etc/passwd.defaults /etc/passwd
+fi
+if [ ! -e "/etc/group" ]; then
+	cp -rfv /etc/group.defaults /etc/group
+fi
+
 # Reset users' password
 # chpasswd doesn't work anymore
 root_zeropass="root::$(cat /etc/shadow | grep "root:" | cut -d":" -f3-)"

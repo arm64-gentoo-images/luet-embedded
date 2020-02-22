@@ -24,6 +24,9 @@ prelude:
 - equo up
 steps:
 - ACCEPT_LICENSE=* equo i sys-apps/dbus && equo cleanup
+- mv /etc/shadow /etc/shadow.defaults
+- mv /etc/passwd /etc/passwd.defaults
+- mv /etc/group /etc/group.defaults
 requires:
 - category: "distro"
   name: "sabayon"
