@@ -197,7 +197,14 @@ touch /tmp/.keep
 chmod 777 /var/tmp
 chmod 777 /tmp
 
-chown -R polkitd /var/lib/polkit-1
+# Be sure polkit and dbus bits are there (e.g. in case of separated dbus installs)
+chown -R polkitd:polkitd /var/lib/polkit-1
+chown -R polkitd:polkitd /etc/polkit-1/rules.d
+chown root:messagebus /usr/libexec/dbus-daemon-launch-helper
+chmod +s /usr/libexec/dbus-daemon-launch-helper
+
+# TODO: Move to its own package when we have the spec
+sed -i 's|/dev/live-base|/tmp/mnt/device/rootfs.squashfs|g' /etc/calamares/modules/unpackfs.conf
 
 # Looks like screen directories are missing
 if [ ! -d "/run/screen" ]; then
