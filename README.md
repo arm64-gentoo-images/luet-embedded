@@ -58,4 +58,17 @@ To build the iso, we need to serve the package repository locally, so they can b
 
 Start the iso build process:
 
-    sudo LUET_PACKAGES="system/lml-init system/lml-boot distro/sabayon-live system/luet-develop system/container-diff" make iso
+    sudo OVERLAY=true FIRST_STAGE="distro/sabayon-initramfs" LUET_PACKAGES="flavor/sabayon-minimal-live system/luet-develop system/container-diff" make iso
+
+## How does it work
+
+With overlay enabled, Luet will compose 4 different rootfs needed to create an ISO from the specfile in `distro_amd64`: initramfs, isoimage, uefi and rootfs.
+
+As luet is a static binary, it doesn't need any special setup to compose your images.
+
+You can specify which packages (whose defintions are in `distro_amd64`) Luet should install in the layers, by any degree of freedom.
+
+- `LUET_PACKAGES`: space-separated list of packages to install in the rootfs which is booted
+- `FIRST_STAGE`: space-separated list of packages to install in the initramfs which is used to boot the rootfs
+- `ISOIMAGE_PACKAGES`: space-separated list of packages to install in the isoimage. You can use it to supply additional files to the xorriso process
+- `UEFI_PACKAGES`: space-separated list of packages to install in the uefi image. Is the efi image to boot uefi systems
