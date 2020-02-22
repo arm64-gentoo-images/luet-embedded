@@ -197,6 +197,8 @@ touch /tmp/.keep
 chmod 777 /var/tmp
 chmod 777 /tmp
 
+chown -R polkitd /var/lib/polkit-1
+
 # Looks like screen directories are missing
 if [ ! -d "/run/screen" ]; then
 	mkdir /run/screen
