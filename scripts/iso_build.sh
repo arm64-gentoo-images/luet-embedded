@@ -15,7 +15,7 @@ export ARCH="${ARCH:-x86_64}"
 export ISOIMAGE_PACKAGES="${ISOIMAGE_PACKAGES:-live/syslinux system/sabayon-live-boot}"
 export UEFI_PACKAGES="${UEFI_PACKAGES:-live/systemd-boot system/sabayon-live-boot}"
 
-export BOOT_DIR="$WORKDIR/boot"
+#export BOOT_DIR="$WORKDIR/boot"
 export ROOTFS_DIR="$WORKDIR/rootfs"
 export OVERLAY_DIR="$WORKDIR/overlay"
 export ISOIMAGE="$WORKDIR/isoimage"
@@ -29,7 +29,7 @@ export GEN_ROOTFS="${GEN_ROOTFS:-true}"
 
 umount_rootfs() {
   local rootfs=$1
-  sudo umount -l $rootfs/boot
+  #sudo umount -l $rootfs/boot
   sudo umount -l $rootfs/dev/pts
 
   sudo umount -l $rootfs/dev/
@@ -44,8 +44,8 @@ luet_install() {
 
   ## Initial rootfs
   pushd "$rootfs"
-  mkdir -p boot
-  mount --bind $BOOT_DIR boot
+ # mkdir -p boot
+ # mount --bind $BOOT_DIR boot
   mkdir -p var/lock
   mkdir -p run/lock
   mkdir -p var/cache/luet

@@ -7,7 +7,7 @@ echo "**** Copy kernel"
 echo "Removing old kernel artifacts. This may take a while."
 rm -rf $KERNEL_INSTALLED
 mkdir -p $KERNEL_INSTALLED
-
+BOOT_DIR=$ROOTFS_DIR/boot
 if [[ -L "$BOOT_DIR/bzImage" ]]
 then
 
