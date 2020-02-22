@@ -82,7 +82,8 @@ modprobe virtio_pci 2>/dev/null
 modprobe part_msdos 2>/dev/null
 modprobe usbms 2>/dev/null
 
-sleep 7
+# Give a chance to load usb and avoid races
+sleep 2
 
 echo "Searching available devices for overlay content."
 for DEVICE in /dev/* ; do
