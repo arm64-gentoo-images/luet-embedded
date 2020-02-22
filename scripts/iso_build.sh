@@ -104,12 +104,6 @@ echo "Initial root:"
 ls -liah  "$ROOTFS_DIR"
 ls -liah  "$OVERLAY_DIR"
 
-rm -rf $BOOT_DIR
-mkdir -p $BOOT_DIR
-
-echo "Initial boot:"
-ls -liah  "$BOOT_DIR"
-
 
 set -ex
 
