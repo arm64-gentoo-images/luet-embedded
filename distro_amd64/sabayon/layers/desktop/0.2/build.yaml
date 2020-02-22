@@ -20,6 +20,10 @@ includes:
 - /sbin$|/sbin/.*
 - /usr$|/usr/.*
 - /var$|/var/.*
+prelude:
+- equo up
+steps:
+- ACCEPT_LICENSE=* equo i sys-apps/dbus && equo cleanup
 requires:
 - category: "distro"
   name: "sabayon"
