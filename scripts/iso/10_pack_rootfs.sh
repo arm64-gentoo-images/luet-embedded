@@ -20,4 +20,4 @@ echo "Packing of initramfs has finished."
 
 popd
 rm -f $WORKDIR/rootfs.squashfs
-mksquashfs "$OVERLAY_DIR" $WORKDIR/rootfs.squashfs -b 1024k -comp xz -Xbcj x86 -e boot
+mksquashfs "$OVERLAY_DIR" $WORKDIR/rootfs.squashfs -b 1024k -comp xz -Xbcj x86
