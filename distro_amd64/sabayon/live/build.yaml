@@ -161,6 +161,6 @@ requires:
 
 steps:
 #- bash rebuild_dracut.sh  (equo i first sabayon-dracut )
-- cp -rfv setup.sh /patches/live_setup.sh
 - mkdir /patches
+- cp -rfv setup.sh /patches/live_setup.sh
 - cp -rfv calamares.py /patches/calamares.py
