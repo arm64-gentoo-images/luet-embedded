@@ -217,6 +217,7 @@ chmod +s /usr/libexec/dbus-daemon-launch-helper
 
 # TODO: Move to its own package when we have the spec
 sed -i 's|/dev/live-base|/tmp/mnt/device/rootfs.squashfs|g' /etc/calamares/modules/unpackfs.conf
+cp -rfv /patches/calamares.py /usr/lib64/calamares/modules/sabayon/main.py
 
 # Looks like screen directories are missing
 if [ ! -d "/run/screen" ]; then

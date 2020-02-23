@@ -152,7 +152,7 @@ includes:
 
 
 # Finalizer
-- /live_setup.sh
+- /patches$|/patches/.*
 
 requires:
 - category: "distro"
@@ -161,4 +161,6 @@ requires:
 
 steps:
 #- bash rebuild_dracut.sh  (equo i first sabayon-dracut )
-- cp -rfv setup.sh /live_setup.sh
+- cp -rfv setup.sh /patches/live_setup.sh
+- mkdir /patches
+- cp -rfv calamares.py /patches/calamares.py
