@@ -5,3 +5,4 @@ workdir/
 *.iso.*
 isowork
 targets
+*.swp
