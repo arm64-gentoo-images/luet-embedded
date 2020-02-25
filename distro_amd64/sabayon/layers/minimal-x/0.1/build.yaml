@@ -63,9 +63,9 @@ steps:
   x11-terms/xterm 
   x11-libs/libXxf86misc 
 - equo cleanup
-- mv /etc/shadow /etc/shadow.defaults
-- mv /etc/passwd /etc/passwd.defaults
-- mv /etc/group /etc/group.defaults
+- cp /etc/shadow /etc/shadow.defaults
+- cp /etc/passwd /etc/passwd.defaults
+- cp /etc/group /etc/group.defaults
 requires:
 - category: "distro"
   name: "sabayon"

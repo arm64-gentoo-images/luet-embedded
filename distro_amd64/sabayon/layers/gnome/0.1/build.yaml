@@ -115,6 +115,9 @@ steps:
   x11-wm/twm
 
 - equo cleanup
+- cp /etc/shadow /etc/shadow.defaults
+- cp /etc/passwd /etc/passwd.defaults
+- cp /etc/group /etc/group.defaults
 - rm /var/log/entropy/entropy.log
 requires:
 - category: "distro"
