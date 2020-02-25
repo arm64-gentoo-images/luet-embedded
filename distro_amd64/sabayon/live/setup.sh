@@ -191,6 +191,10 @@ done
 if [ ! -e "/etc/shadow" ]; then
 	cp -rfv /etc/shadow.defaults /etc/shadow
 fi
+
+if [ ! -e "/etc/gshadow" ]; then
+	cp -rfv /etc/gshadow.defaults /etc/gshadow
+fi
 if [ ! -e "/etc/passwd" ]; then
 	cp -rfv /etc/passwd.defaults /etc/passwd
 fi
