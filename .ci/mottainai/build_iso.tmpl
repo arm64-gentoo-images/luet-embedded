@@ -1,13 +1,13 @@
-name: "Build luet-embedded iso"
+name: "Build luet-embedded iso {{.ImageName}}"
 
 artefact_path: build
 cache_clean: "yes"
 environment:
 - TREE=distro_amd64
-- LUET_PACKAGES=flavor/sabayon-minimal-live system/luet-develop system/container-diff
+- LUET_PACKAGES={{.Packages}} system/luet-develop system/container-diff
 - OVERLAY=true
 - FIRST_STAGE=distro/sabayon-initramfs
-- IMAGE_NAME=luet_os.iso
+- IMAGE_NAME={{.ImageName}}.iso
 image: sabayon/ci
 script:
 - source /etc/profile
@@ -22,8 +22,9 @@ script:
 - popd
 - export LUET_CONFIG=$PWD/conf/luet-dso.yaml
 - make iso
-- cp -rfv luet_os.iso build/
+- cp -rfv *.iso build/
 source: https://github.com/Luet-lab/luet-embedded
 tag_namespace: luet-embedded-iso
+publish_mode: append
 type: lxd
 queue: lxd

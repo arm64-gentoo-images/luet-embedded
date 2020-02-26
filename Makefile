@@ -1,5 +1,6 @@
 BACKEND?=docker
 CONCURRENCY?=1
+CI_ARGS?=
 
 # Abs path only. It gets copied in chroot in pre-seed stages
 LUET?=/usr/bin/luet
@@ -80,3 +81,7 @@ iso:
 .PHONY: iso-clean
 iso-clean:
 	scripts/iso_clean.sh
+
+.PHONY: ci
+ci:
+	.ci/mottainai/run.sh ${CI_ARGS}
