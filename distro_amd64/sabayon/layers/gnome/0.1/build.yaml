@@ -123,4 +123,4 @@ steps:
 requires:
 - category: "distro"
   name: "sabayon-minimal-x"
-  version: "0.1"
+  version: ">=0.1"
