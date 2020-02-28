@@ -3,7 +3,7 @@ name: "sabayon-gnome-live"
 version: "0.1"
 requires:
 - category: "distro"
-  name: "sabayon-gnome"
+  name: "sabayon-gnome-live"
   version: ">=0.1"
 - category: "system"
   name: "sabayon-init"
