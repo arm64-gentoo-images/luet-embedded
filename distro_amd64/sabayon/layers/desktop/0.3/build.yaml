@@ -358,10 +358,8 @@ includes:
 - /sbin$|/sbin/.*
 - /usr$|/usr/.*
 - /var$|/var/.*
-prelude:
-- equo 
 steps:
-- ACCEPT_LICENSE=* equo i sys-apps/dbus && equo cleanup
+- source /etc/profile && ACCEPT_LICENSE=* equo i sys-apps/dbus && equo cleanup
 - cp /etc/shadow /etc/shadow.defaults
 - cp /etc/gshadow /etc/gshadow.defaults
 - cp /etc/passwd /etc/passwd.defaults
