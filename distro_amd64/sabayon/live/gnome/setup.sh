@@ -135,6 +135,7 @@ systemctl --no-reload set-default graphical
 prepare_gnome
 
 setup_installed_packages
+setup_networkmanager
 
 ldconfig
 
