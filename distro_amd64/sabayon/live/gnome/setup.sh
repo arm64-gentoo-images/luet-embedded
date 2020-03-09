@@ -17,6 +17,24 @@ sd_disable() {
 		systemctl --no-reload disable -f "${srv}${ext}"
 }
 
+
+setup_displaymanager() {
+	# determine what is the login manager
+	if [ -n "$(equo match --installed gnome-base/gdm -qv)" ]; then
+		sd_enable gdm
+	elif [ -n "$(equo match --installed lxde-base/lxdm -qv)" ]; then
+		sd_enable lxdm
+	elif [ -n "$(equo match --installed x11-misc/lightdm-base -qv)" ]; then
+		sd_enable lightdm
+	elif [ -n "$(equo match --installed kde-base/kdm -qv)" ]; then
+		sd_enable kdm
+  elif [ -n "$(equo match --installed x11-misc/sddm -qv)" ]; then
+    sd_enable sddm
+	else
+		sd_enable xdm
+	fi
+}
+
 setup_fonts() {
 	# Cause some rendering glitches on vbox as of 2011-10-02
 	#	10-autohint.conf
@@ -56,6 +74,31 @@ setup_default_xsession() {
 	ln -sf "${sess}.desktop" /usr/share/xsessions/default.desktop
 }
 
+setup_installed_packages() {
+	# Update package list
+	equo query list installed -qv > /etc/sabayon-pkglist
+	echo -5 | equo conf update
+
+	echo "Vacuum cleaning client db"
+	rm /var/lib/entropy/client/database/*/sabayonlinux.org -rf
+	rm /var/lib/entropy/client/database/*/sabayon-limbo -rf
+	rm /var/lib/entropy/client/database/*/sabayon-weekly -rf
+	equo rescue vacuum
+
+	# cleanup log dir
+	rm /var/lib/entropy/logs -rf
+	rm -rf /var/lib/entropy/*cache*
+	# remove entropy pid file
+	rm -f /run/entropy/entropy.lock
+	rm -f /var/lib/entropy/entropy.pid
+	rm -f /var/lib/entropy/entropy.lock
+}
+
+setup_networkmanager() {
+	sd_enable NetworkManager
+	sd_enable ModemManager
+}
+
 prepare_gnome() {
 	if [ -f "/usr/share/xsessions/cinnamon.desktop" ]; then
 		setup_default_xsession "cinnamon"
@@ -83,6 +126,18 @@ SYSTEMD_SERVICES=(
 for srv in "${SYSTEMD_SERVICES[@]}"; do
 	sd_enable "${srv}"
 done
+
+
+eselect opengl set xorg-x11
+
+systemctl --no-reload set-default graphical
+
+prepare_gnome
+
+setup_installed_packages
+
+ldconfig
+
 
 # Create a default "games" group so that
 # the default user will be added to it during
