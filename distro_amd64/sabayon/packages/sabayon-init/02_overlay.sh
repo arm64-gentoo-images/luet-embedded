@@ -83,7 +83,7 @@ modprobe part_msdos 2>/dev/null
 modprobe usbms 2>/dev/null
 
 # Give a chance to load usb and avoid races
-sleep 2
+sleep 7
 
 echo "Searching available devices for overlay content."
 for DEVICE in /dev/* ; do
