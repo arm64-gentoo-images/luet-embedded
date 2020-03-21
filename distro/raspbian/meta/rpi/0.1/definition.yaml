@@ -9,5 +9,5 @@ requires:
   name: "raspbian-boot"
   version: ">=0.1"
 - category: "system"
-  name: "luet-develop"
-  version: "0.5"
+  name: "luet"
+  version: ">=0.5"

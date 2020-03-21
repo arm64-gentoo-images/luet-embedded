@@ -58,7 +58,7 @@ To build the iso, we need to serve the package repository locally, so they can b
 
 Start the iso build process:
 
-    sudo OVERLAY=true FIRST_STAGE="distro/sabayon-initramfs" LUET_PACKAGES="flavor/sabayon-minimal-live system/luet-develop system/container-diff" make iso
+    sudo OVERLAY=true FIRST_STAGE="distro/sabayon-initramfs" LUET_PACKAGES="flavor/sabayon-minimal-live system/luet system/container-diff" make iso
 
 ## How does it work
 
