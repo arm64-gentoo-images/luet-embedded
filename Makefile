@@ -50,6 +50,11 @@ rebuild:
 rebuild-all:
 	$(SUDO) $(LUET) build $(BUILD_ARGS) --clean=$(CLEAN) --tree=$(TREE) --all --destination $(ROOT_DIR)/build --backend $(BACKEND) --concurrency $(CONCURRENCY) --compression $(COMPRESSION)
 
+.PHONY: validate
+validate:
+	$(LUET) tree validate --tree $(ROOT_DIR)/distro -s
+	$(LUET) tree validate --tree $(ROOT_DIR)/distro_amd64 -s
+
 .PHONY: create-repo
 create-repo:
 	$(SUDO) $(LUET) create-repo --tree "$(TREE)" \
