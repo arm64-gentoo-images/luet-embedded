@@ -64,7 +64,8 @@ create-repo:
     --descr "Luet embedded Repo" \
     --urls "http://localhost:8000" \
     --tree-compression gzip \
-    --tree-path tree.tar \
+    --meta-compression gzip \
+    --tree-filename tree.tar \
     --type http
 
 .PHONY: serve-repo
