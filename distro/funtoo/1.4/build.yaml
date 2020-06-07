@@ -5,6 +5,7 @@ requires:
   version: ">=0.1"
 steps:
 - sh build.sh
+package_dir: /temp
 includes:
 - /bin$|/bin/.*
 - /dev$|/dev/.*
