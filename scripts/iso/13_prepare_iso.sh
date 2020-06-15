@@ -8,6 +8,7 @@ luet_install() {
   mkdir -p "$rootfs/luetdb" || true
   cp -rfv  "${LUET_CONFIG}" "$rootfs/luet.yaml"
   cat <<EOF >> "$rootfs/luet.yaml"
+
 system:
   rootfs: $rootfs
   database_path: "/luetdb"
