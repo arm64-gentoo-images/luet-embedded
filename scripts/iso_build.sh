@@ -62,7 +62,7 @@ luet_install() {
   mkdir -p proc
   mkdir -p tmp
   mkdir -p dev/pts
-  cp -rfv "${LUET_CONFIG}" etc/luet/.luet.yaml
+  cp -rfv "${LUET_CONFIG}" etc/luet/luet.yaml
   cp -rfv "${LUET_BIN}" luet
   sudo mount --bind /dev $rootfs/dev/
   sudo mount --bind /sys $rootfs/sys/
