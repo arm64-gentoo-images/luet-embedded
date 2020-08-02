@@ -1,9 +1,9 @@
 category: "distro"
 name: "funtoo-rpi-meta"
-version: "0.1"
+version: "0.1+1"
 requires:
 - category: "distro"
-  name: "funtoo"
+  name: "funtoo-raspi3"
   version: ">=1.4" 
 - category: "distro"
   name: "raspbian-boot"
