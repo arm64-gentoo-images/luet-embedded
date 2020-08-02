@@ -1,9 +1,9 @@
 category: "distro"
-name: "funtoo"
-version: "1.4+2020.04.10"
+name: "funtoo-raspi3"
+version: "1.4+2020.07.06"
 conflicts:
 - category: "distro"
   name: "raspbian"
   version: ">=0.1"
 labels:
-  original.tarball.date: "2020-04-10"
+  original.tarball.date: "2020-07-06"
