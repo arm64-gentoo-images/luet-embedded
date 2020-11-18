@@ -1,0 +1,6 @@
+install:
+- mkdir /boot/efi|| true
+- unzip -d RPi3_UEFI_Firmware_{$pv}.zip /boot/efi|| true
+### rpi gui uefi "pc bios" alike fw enable grub gentoo arch64  plymouth etc . 
+# https://github.com/pftf/RPi4/releases/tag/v1.21 
+# 10 M bios grub , 120M eufi , 550-660Mib /boot /root zswap walla.. 

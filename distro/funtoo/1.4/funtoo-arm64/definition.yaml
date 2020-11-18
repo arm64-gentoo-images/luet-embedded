@@ -1,0 +1,9 @@
+category: "distro"
+name: "funtoo-arm64"
+version: "1.4+2020.07.06"
+conflicts:
+- category: "distro"
+  name: "raspbian"
+  version: ">=0.1"
+labels:
+  original.tarball.date: "2020-07-06"
